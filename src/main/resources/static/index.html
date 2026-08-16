@@ -82,31 +82,76 @@
 
                 data.forEach((sight, index) => {
 
+                    const collapseId =
+                        "collapse-" + index;
+
+                    const mapUrl =
+                        "https://www.google.com/maps/search/?api=1&query=" +
+                        encodeURIComponent(sight.address);
+
                     const card = `
-                    <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4">
 
-                        <div class="card h-100">
+                <div class="card h-100">
 
-                            <div class="card-body">
+                    <div class="card-body">
 
-                                <h5 class="card-title">
-                                    ${sight.sightName}
-                                </h5>
+                        <h5 class="card-title">
+                            ${sight.sightName}
+                        </h5>
 
-                                <p class="card-text">
-                                    區域：${sight.zone}
-                                </p>
+                        <p class="card-text">
+                            區域：${sight.zone}
+                        </p>
 
-                                <p class="card-text">
-                                    分類：${sight.category}
-                                </p>
+                        <p class="card-text">
+                            分類：${sight.category}
+                        </p>
 
-                            </div>
+                        <a href="${mapUrl}"
+                           target="_blank"
+                           class="btn btn-primary">
+                            地址
+                        </a>
+
+                        <button
+                            class="btn btn-secondary"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#${collapseId}">
+                            詳細資訊
+                        </button>
+
+                        <div class="collapse mt-3"
+                             id="${collapseId}">
+
+                            ${
+                        sight.photoURL
+                            ? `
+                                        <img
+                                            src="${sight.photoURL}"
+                                            class="img-fluid mb-3"
+                                            alt="${sight.sightName}">
+                                      `
+                            : ""
+                    }
+
+                            <p>
+                                ${sight.description}
+                            </p>
+
+                            <p>
+                                地址：${sight.address}
+                            </p>
 
                         </div>
 
                     </div>
-                `;
+
+                </div>
+
+            </div>
+        `;
 
                     sightList.innerHTML += card;
 
